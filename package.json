@@ -1,0 +1,18 @@
+{
+  "name": "practica-1",
+  "version": "1.0.0",
+  "description": "Práctica 1 — Foundations API: blog de recetas (Node.js + Express, datos en memoria)",
+  "private": true,
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "zod": "^4.6.7"
+  }
+}
