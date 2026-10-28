@@ -6,6 +6,9 @@ const CATEGORIES = ['tapas', 'cuchara', 'frios', 'postres'];
 const TITLE_MAX = 100;
 const MINUTES_MIN = 1;
 const MINUTES_MAX = 600;
+const DESCRIPTION_MAX = 500;
+const INGREDIENTS_MAX = 30;
+const INGREDIENT_MAX = 100;
 
 // Mensaje distinto si el campo falta (undefined) o si llega con un tipo incorrecto.
 const typeError = (field, expected) => ({
@@ -29,6 +32,25 @@ const recipeSchema = z.object({
     .max(MINUTES_MAX, `prepMinutes debe estar entre ${MINUTES_MIN} y ${MINUTES_MAX}`),
 
   published: z.boolean(typeError('published', 'true o false')),
+
+  // description e ingredients son OPCIONALES (aunque estén en POST/PUT): si faltan, se guardan vacíos.
+  description: z
+    .string({ error: 'description debe ser un texto' })
+    .trim()
+    .max(DESCRIPTION_MAX, `description no puede superar ${DESCRIPTION_MAX} caracteres`)
+    .optional(),
+
+  ingredients: z
+    .array(
+      z
+        .string({ error: 'ingredients debe ser una lista de textos' })
+        .trim()
+        .min(1, 'ingredients no puede tener elementos vacíos')
+        .max(INGREDIENT_MAX, `cada ingrediente admite como máximo ${INGREDIENT_MAX} caracteres`),
+      { error: 'ingredients debe ser una lista de textos' },
+    )
+    .max(INGREDIENTS_MAX, `ingredients admite como máximo ${INGREDIENTS_MAX} elementos`)
+    .optional(),
 
   category: z.enum(CATEGORIES, {
     error: (issue) =>
@@ -76,7 +98,9 @@ function validateRecipe(body, { partial = false } = {}) {
     };
   }
 
-  return { errors: [], data: result.data };
+  // En POST y PUT (el recurso entero) los campos opcionales que falten se guardan vacíos.
+  const data = partial ? result.data : { description: '', ingredients: [], ...result.data };
+  return { errors: [], data };
 }
 
-module.exports = { validateRecipe, CATEGORIES, TITLE_MAX, MINUTES_MIN, MINUTES_MAX };
+module.exports = { validateRecipe, CATEGORIES, TITLE_MAX, MINUTES_MIN, MINUTES_MAX, DESCRIPTION_MAX, INGREDIENTS_MAX };
