@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!-- Trabajo en pareja: Clara López y Blanca Abreu -->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recetas Caseras — Blog de recetas de cocina casera</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="has-sidebar">
+
+<header>
+    <h1><strong>RECETAS CASERAS</strong></h1>
+</header>
+
+<nav aria-label="Secciones de la página">
+    <a href="#listado">Recetas</a>
+    <a href="#formulario">Nueva receta</a>
+</nav>
+
+<main>
+
+<p>Recetas Caseras es un blog dedicado a la cocina de siempre, la que se cocina a fuego lento y se comparte en familia. Aquí puedes consultar, buscar y gestionar el recetario.</p>
+
+<p id="status" class="status" role="status" hidden>Cargando…</p>
+<div id="error-banner" class="banner-error" role="alert" hidden></div>
+
+<section id="formulario" aria-labelledby="form-title">
+    <h2 id="form-title">Nueva receta</h2>
+
+    <form id="recipe-form" novalidate>
+        <div class="form-grid">
+            <div class="field">
+                <label for="title">Título</label>
+                <input type="text" id="title" name="title" maxlength="100" aria-describedby="title-error" required>
+                <p id="title-error" class="field-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+                <label for="prepMinutes">Minutos de preparación</label>
+                <input type="number" id="prepMinutes" name="prepMinutes" min="1" max="600" step="1" aria-describedby="prepMinutes-error" required>
+                <p id="prepMinutes-error" class="field-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+                <label for="category">Categoría</label>
+                <select id="category" name="category" aria-describedby="category-error" required>
+                    <option value="">Elige una categoría</option>
+                    <option value="tapas">Tapas</option>
+                    <option value="cuchara">Platos de cuchara</option>
+                    <option value="frios">Platos fríos</option>
+                    <option value="postres">Postres</option>
+                </select>
+                <p id="category-error" class="field-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field field-wide">
+                <label for="description">Descripción <span class="hint">(opcional, máx. 500 caracteres)</span></label>
+                <textarea id="description" name="description" rows="3" maxlength="500" aria-describedby="description-error"></textarea>
+                <p id="description-error" class="field-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field field-wide">
+                <label for="ingredients">Ingredientes <span class="hint">(opcional, uno por línea)</span></label>
+                <textarea id="ingredients" name="ingredients" rows="5" aria-describedby="ingredients-error"></textarea>
+                <p id="ingredients-error" class="field-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field field-check">
+                <label class="check-label" for="published">
+                    <input type="checkbox" id="published" name="published" aria-describedby="published-error">
+                    Publicada
+                </label>
+                <p id="published-error" class="field-error" aria-live="polite"></p>
+            </div>
+        </div>
+
+        <p id="body-error" class="field-error" aria-live="polite"></p>
+
+        <div class="form-actions">
+            <button type="submit" id="submit-btn" class="btn-primary">Crear receta</button>
+            <button type="button" id="cancel-btn" class="btn-secondary" hidden>Cancelar edición</button>
+        </div>
+    </form>
+</section>
+
+<section id="listado" aria-labelledby="list-title">
+    <h2 id="list-title">Recetas</h2>
+
+    <form id="filters" class="filters" role="search" aria-label="Buscar y filtrar recetas">
+        <div class="field">
+            <label for="f-search">Buscar por título</label>
+            <input type="search" id="f-search" placeholder="Ej. croquetas">
+        </div>
+        <div class="field">
+            <label for="f-published">Estado</label>
+            <select id="f-published">
+                <option value="">Todas</option>
+                <option value="true">Publicadas</option>
+                <option value="false">Borradores</option>
+            </select>
+        </div>
+        <div class="field">
+            <label for="f-category">Categoría</label>
+            <select id="f-category">
+                <option value="">Todas</option>
+                <option value="tapas">Tapas</option>
+                <option value="cuchara">Platos de cuchara</option>
+                <option value="frios">Platos fríos</option>
+                <option value="postres">Postres</option>
+            </select>
+        </div>
+        <div class="field">
+            <label for="f-sort">Ordenar por</label>
+            <select id="f-sort">
+                <option value="id">Orden de creación</option>
+                <option value="title">Título</option>
+                <option value="prepMinutes">Minutos</option>
+            </select>
+        </div>
+        <div class="field">
+            <label for="f-order">Sentido</label>
+            <select id="f-order">
+                <option value="asc">Ascendente</option>
+                <option value="desc">Descendente</option>
+            </select>
+        </div>
+    </form>
+
+    <p id="empty" class="empty" hidden>No hay recetas que coincidan con la búsqueda.</p>
+
+    <div id="table-wrap" class="table-wrap">
+        <table>
+            <caption class="visually-hidden">Listado de recetas</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Detalle</th>
+                    <th scope="col">Minutos</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="recipes-body"></tbody>
+        </table>
+    </div>
+</section>
+
+</main>
+
+<aside>
+    <h2>Antes de cocinar</h2>
+    <p>Revisa siempre el etiquetado de los ingredientes envasados (como el chorizo o el atún) si tienes alguna <strong>alergia o intolerancia</strong>.</p>
+</aside>
+
+<footer>
+    <p>&copy; 2026 Recetas Caseras. Todos los derechos reservados.</p>
+    <p><a href="https://www.fesnad.org/" title="Federación Española de Sociedades de Nutrición, Alimentación y Dietética">Más información sobre nutrición</a></p>
+</footer>
+
+<script src="app.js"></script>
+
+</body>
+</html>

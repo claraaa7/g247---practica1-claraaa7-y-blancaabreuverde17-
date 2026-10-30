@@ -1,0 +1,409 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+nav {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.75rem 1rem;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+body.has-sidebar {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas:
+    "header header"
+    "nav nav"
+    "main aside"
+    "footer footer";
+  gap: 1.5rem;
+}
+
+body.has-sidebar header { grid-area: header; }
+body.has-sidebar nav { grid-area: nav; }
+body.has-sidebar main { grid-area: main; }
+body.has-sidebar aside { grid-area: aside; }
+body.has-sidebar footer { grid-area: footer; }
+
+article {
+  padding: 1.25rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  background-color: #fafafa;
+}
+
+article img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+body:not(.has-sidebar) main {
+  display: flex;
+  gap: 1.5rem;
+}
+
+body:not(.has-sidebar) main > section {
+  flex: 1;
+}
+
+@media (max-width: 700px) {
+  body.has-sidebar {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "nav"
+      "main"
+      "aside"
+      "footer";
+  }
+
+  body:not(.has-sidebar) main {
+    flex-direction: column;
+  }
+
+  nav {
+    flex-wrap: wrap;
+  }
+}
+
+/* ---------- Formularios (estilos originales, ampliados para la práctica) ---------- */
+
+/* Antes: max-width 420px y margin auto (pensado para el login). Ahora el formulario ocupa el ancho de la sección. */
+form {
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fafafa;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+/* Antes: "form input" (también afectaba al checkbox). Ahora solo los campos de texto, número y búsqueda, los select y los textarea. */
+form input[type="text"],
+form input[type="number"],
+form input[type="search"],
+form select,
+form textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: #fff;
+}
+
+form textarea {
+  resize: vertical;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  outline: none;
+  border-color: #ef5be0;
+  box-shadow: 0 0 0 3px rgba(220, 77, 218, 0.25);
+}
+
+form input[aria-invalid="true"],
+form select[aria-invalid="true"],
+form textarea[aria-invalid="true"] {
+  border-color: #b00020;
+}
+
+form button {
+  padding: 0.7rem 1.2rem;
+  background-color: #f78fe4;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #e88edc;
+}
+
+header,
+nav,
+main,
+aside,
+footer {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+/* =====================================================================
+   Añadidos para la Práctica 1 (cliente que consume la API)
+   ===================================================================== */
+
+/* Evita que el contenido ancho (la tabla) desborde la columna del grid */
+main {
+  min-width: 0;
+}
+
+/* Foco visible también con teclado en enlaces, botones y campos */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+form :is(input, select, textarea):focus-visible {
+  outline: 3px solid #1a73e8;
+  outline-offset: 2px;
+}
+
+main section {
+  margin-bottom: 1.5rem;
+}
+
+/* Grid: campos del formulario y de los filtros */
+.form-grid,
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
+}
+
+.filters {
+  margin-bottom: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field label {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+/* Los campos largos (descripción, ingredientes) ocupan todo el ancho del grid */
+.field-wide {
+  grid-column: 1 / -1;
+}
+
+.hint {
+  font-weight: 400;
+  color: #666;
+}
+
+.field-check {
+  justify-content: center;
+}
+
+.check-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.field-error {
+  margin: 0;
+  min-height: 1.2em;
+  color: #b00020;
+  font-size: 0.85rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+form button.btn-secondary {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+form button.btn-secondary:hover {
+  background-color: #f1f1f1;
+}
+
+/* Indicador de carga y mensajes de error */
+.status {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  background: #fff3cd;
+  border: 1px solid #e0c36a;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.banner-error {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: #fdecee;
+  border: 1px solid #b00020;
+  border-radius: 6px;
+  color: #b00020;
+}
+
+.empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: #666;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+}
+
+/* Tabla de recetas */
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.6rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+th {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Columna "Detalle": descripción y lista desplegable de ingredientes */
+.recipe-description {
+  margin: 0 0 0.4rem;
+}
+
+.recipe-ingredients summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.recipe-ingredients ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.muted {
+  color: #666;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #eee;
+}
+
+.badge-published {
+  background: #dff3e6;
+  color: #1e6b3a;
+}
+
+.row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.row-actions button {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: #333;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.row-actions button:hover {
+  background: #f1f1f1;
+}
+
+.row-actions button.btn-danger {
+  color: #b00020;
+  border-color: #b00020;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Responsive: la tabla pasa a tarjetas apiladas en pantallas estrechas */
+@media (max-width: 700px) {
+  .form-grid,
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  thead {
+    display: none;
+  }
+
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+    width: 100%;
+  }
+
+  tr {
+    padding: 0.5rem 0;
+    border-bottom: 2px solid #ddd;
+  }
+
+  td {
+    border-bottom: none;
+    padding: 0.25rem 0;
+  }
+
+  td::before {
+    content: attr(data-label) ": ";
+    font-weight: 600;
+    color: #666;
+  }
+}
