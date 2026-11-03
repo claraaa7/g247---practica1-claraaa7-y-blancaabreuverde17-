@@ -83,7 +83,9 @@ Base: `http://localhost:3000`. Todas las respuestas con cuerpo son JSON.
 | PUT | `/recipes/:id` | — | `200` + receta sustituida | `404` no existe · `400` validación |
 | PATCH | `/recipes/:id` | — | `200` + receta actualizada | `404` no existe · `400` validación |
 | DELETE | `/recipes/:id` | — | `204` sin cuerpo | `404` si no existe |
-| cualquier otra | cualquier otra | — | — | `404` `{ "error": "..." }` |
+| cualquier otra | cualquier otra (salvo los archivos de `public/`, p. ej. `/`) | — | — | `404` `{ "error": "..." }` |
+
+En `PUT` y `PATCH`, si el id no existe se responde `404` **antes** de validar el cuerpo.
 
 Formatos de error:
 
@@ -96,7 +98,7 @@ Todos los parámetros son opcionales y combinables.
 
 | Parámetro | Valores | Efecto |
 |---|---|---|
-| `search` | texto | Busca de forma parcial, sin distinguir mayúsculas, en `title` (no busca en `description` ni en `ingredients`). |
+| `search` | texto | Busca de forma parcial, sin distinguir mayúsculas (pero sí acentos: `jamon` no encuentra «jamón»), en `title` (no busca en `description` ni en `ingredients`). |
 | `published` | `true` \| `false` | Filtra por el campo booleano. |
 | `category` | `tapas` \| `cuchara` \| `frios` \| `postres` | Filtra por categoría. |
 | `sort` | `id` (por defecto) \| `title` \| `prepMinutes` | Campo de ordenación. |
@@ -110,7 +112,7 @@ La cabecera `X-Total-Count` indica el total de resultados **antes** de aplicar `
 
 ### `GET /recipes/stats`
 
-Se calcula en cada petición a partir de los datos actuales; no se guarda en ningún sitio. La ruta está declarada **antes** de `/:id` para que Express no interprete `stats` como un id.
+Se calcula en cada petición a partir de los datos actuales; no se guarda en ningún sitio. Si no hay recetas, averagePrepMinutes vale null. La ruta está declarada **antes** de `/:id` para que Express no interprete `stats` como un id.
 
 ### Ejemplos de petición y respuesta
 
