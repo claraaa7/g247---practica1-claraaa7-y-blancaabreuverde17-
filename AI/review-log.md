@@ -1,0 +1,26 @@
+# Registro de revisión del tester agent
+
+Aquí se anota cada aportación relevante del agente: qué se le pidió, qué devolvió, qué se corrigió o rechazó y por qué. Las comprobaciones completas están en [`agents.md`](agents.md). Todo lo que figura aquí ocurrió de verdad el 30 de octubre de 2026.
+
+## Entradas
+
+| # | Qué se le solicitó | Qué devolvió | Qué se corrigió o rechazó | Motivo |
+|---|---|---|---|---|
+| 1 | Diseñar y ejecutar comprobaciones de caja negra a partir del contrato (todos los endpoints, errores, validación incluyendo `description` e `ingredients`, filtros, orden, paginación, rutas inexistentes). | Un informe con 143 comprobaciones numeradas (secciones A–G), todas marcadas PASA, y 10 dudas de interpretación (D1–D10). | **Se descarta el recuento del resumen.** El agente escribe «100 comprobaciones, 100 PASA», pero su propia tabla llega a la número 143. Se usa el dato de la tabla. | El resumen no coincidía con el contenido. Hay que contar lo que se ejecutó, no fiarse del titular. |
+| 2 | (Misma ejecución.) Las comprobaciones 14, 63, 88 y 117–120 las marca PASA aunque el propio agente dice que el contrato no las define. | Casos «ambiguos» con resultado PASA. | **No se cuentan como verificación del contrato.** Se tratan como decisiones de diseño de la API. Las que son relevantes ya estaban documentadas (parámetros repetidos o mal formados se ignoran). | Un caso que el contrato no define no puede «pasar» ni «fallar». Marcarlo PASA da una sensación de cobertura que no es real. |
+| 3 | (Misma ejecución.) Duda D1: `GET /recipes/01` devuelve 200. | Lo marca PASA y lo deja a criterio del autor. | **Se comprobó a mano** con `curl` sobre un servidor recién arrancado: `/recipes/01` y `/recipes/001` devuelven 200. Se **mantiene** el comportamiento. | `01` es un entero positivo (el contrato dice «entero positivo») y apunta al mismo recurso que `1`. No es un fallo. Se rechazan `+1`, `1e0`, `1.5` o `abc`. |
+| 4 | (Misma ejecución.) Duda D8: `GET /` devuelve 200 con HTML, y `OPTIONS` y `HEAD` también responden. | Observación de que «cualquier otra ruta → 404» no se cumple literalmente. | **Se corrigió el README.** La fila «cualquier otra» ahora dice «salvo los archivos de `public/`, p. ej. `/`». Se comprobó que `GET /` devuelve 200 con 6806 bytes de `text/html`. | La ambigüedad estaba en nuestro contrato, no en la API: `express.static` sirve la página en `/` a propósito. OPTIONS y HEAD son el comportamiento por defecto de Express y no se cambian. |
+| 5 | (Misma ejecución.) Duda D2: en PUT/PATCH con id inexistente y cuerpo inválido, la API responde 404 y no 400. | Lo considera aceptable. | **Se documentó** en el README: «si el id no existe se responde 404 antes de validar el cuerpo». No se cambia el código. | Es una decisión de diseño razonable (el recurso no existe, no tiene sentido validar para él), pero el contrato no la recogía. |
+| 6 | (Misma ejecución.) Dudas D5 y D10: la búsqueda distingue acentos; `averagePrepMinutes` es `null` si no hay recetas. | Las clasifica como observaciones, no como fallos. | **Se documentaron** en el README (`search` distingue acentos; `averagePrepMinutes` vale `null` sin recetas). No se cambia el código. | Comportamiento aceptable pero no escrito. Una API bien documentada no deja estos casos a la suerte. |
+| 7 | (Misma ejecución.) Dudas D3, D4, D6, D7 y D9: `search` de solo espacios, `Content-Type: text/plain`, parámetros repetidos, bytes no codificados en la URL y orden de las claves del JSON. | Observaciones menores. | **Sin cambios.** Se comprobó a mano que `?limit=2&limit=3` devuelve 200 con `X-Total-Count: 8` (se ignora). | No incumplen el contrato. D7 lo rechaza el analizador HTTP de Node antes de llegar a nuestro código, y D9 es solo el orden de las claves. |
+
+## Qué no hizo bien el agente / límites de esta revisión
+
+- **No se le ha dado el código**, pero tampoco hay aislamiento técnico: la restricción de no leer archivos estaba en el prompt. Su informe indica que cumplió, pero es una declaración suya.
+- **Todo PASA.** Un tester que no encuentra ningún fallo en 143 casos merece desconfianza. Por eso se contrastaron a mano los puntos dudosos (entradas 3, 4 y 7) en lugar de aceptar el resultado.
+- **El contrato que recibió salía de nuestro propio README**, así que las comprobaciones comprueban que la API cumple lo que nosotras hemos escrito, no que sea una buena API.
+- **Se ejecutó una sola vez.** Los datos quedaron modificados por las pruebas (el agente llegó a vaciar la colección), por lo que se reinició el servidor para volver a las 8 recetas iniciales.
+
+## Otros agentes de IA usados en el proyecto
+
+Además del tester agent, durante el proyecto se usaron agentes de IA como ayuda para el HTML, el CSS y para interpretar el enunciado. El HTML y el CSS parten de los archivos que ya se habían hecho en el curso y se adaptaron a la práctica; todo el código entregado ha sido revisado y puede explicarse por ambas integrantes. El enunciado pide documentar en `AI/` un único agente (el tester), por eso solo este tiene configuración y registro de revisión.
