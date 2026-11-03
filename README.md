@@ -167,6 +167,17 @@ Los ejemplos están escritos para bash/macOS/Linux. En PowerShell hay que usar `
 
 El PATCH sin ningún campo válido (por ejemplo `{}` o solo campos desconocidos) responde `400` con `{"field":"body","message":"Debe enviar al menos un campo válido para actualizar"}`.
 
+
+## Pruebas automáticas
+
+Hay 22 pruebas con [Jest](https://jestjs.io) y [Supertest](https://github.com/ladjs/supertest) en `tests/recipes.test.js`. Importan `src/app.js` (la aplicación sin `listen`), así que no necesitan el servidor arrancado ni ocupan ningún puerto.
+
+```bash
+npm test
+```
+
+Cubren: listado con filtros, orden y paginación; ids válidos e inválidos; estadísticas; creación (201, `Location`, id del servidor, campos extra descartados); validación con todas las incidencias; JSON mal formado; diferencia entre PUT y PATCH; DELETE (204 y 404) y rutas inexistentes. Cada prueba carga una copia nueva de la aplicación para partir siempre de las 8 recetas iniciales.
+
 ## Contenido estático
 
 La carpeta `public/` se sirve con `express.static` en `src/app.js`, **antes** de montar el router de la API y después de `express.json()` y del logger. Se hace así para que la página y la API compartan origen (`http://localhost:3000`): el cliente llama a `fetch('/recipes')` con una ruta relativa y no hace falta configurar CORS.
