@@ -1,6 +1,6 @@
 # Registro de revisión del tester agent
 
-Aquí se anota cada aportación relevante del agente: qué se le pidió, qué devolvió, qué se corrigió o rechazó y por qué. Las comprobaciones completas están en [`agents.md`](agents.md). Todo lo que figura aquí ocurrió de verdad el 30 de octubre de 2026.
+Aquí se anota cada aportación relevante del agente: qué se le pidió, qué devolvió, qué se corrigió o rechazó y por qué. Las comprobaciones completas están en [`agents.md`](agents.md).
 
 ## Entradas
 
@@ -20,7 +20,3 @@ Aquí se anota cada aportación relevante del agente: qué se le pidió, qué de
 - **Todo PASA.** Un tester que no encuentra ningún fallo en 143 casos merece desconfianza. Por eso se contrastaron a mano los puntos dudosos (entradas 3, 4 y 7) en lugar de aceptar el resultado.
 - **El contrato que recibió salía de nuestro propio README**, así que las comprobaciones comprueban que la API cumple lo que nosotras hemos escrito, no que sea una buena API.
 - **Se ejecutó una sola vez.** Los datos quedaron modificados por las pruebas (el agente llegó a vaciar la colección), por lo que se reinició el servidor para volver a las 8 recetas iniciales.
-
-## Otros agentes de IA usados en el proyecto
-
-Además del tester agent, durante el proyecto se usaron agentes de IA como ayuda para el HTML, el CSS y para interpretar el enunciado. El HTML y el CSS parten de los archivos que ya se habían hecho en el curso y se adaptaron a la práctica; todo el código entregado ha sido revisado y puede explicarse por ambas integrantes. El enunciado pide documentar en `AI/` un único agente (el tester), por eso solo este tiene configuración y registro de revisión.
