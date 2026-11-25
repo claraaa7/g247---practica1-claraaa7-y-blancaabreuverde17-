@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Mesa de cocina con cacerola, tazón y hierbas">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7a2e14"/><stop offset="0.55" stop-color="#b5441f"/><stop offset="1" stop-color="#e08a3c"/>
+    </linearGradient>
+    <pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2" fill="#fff" opacity=".08"/></pattern>
+  </defs>
+  <rect width="1600" height="420" fill="url(#bg)"/>
+  <rect width="1600" height="420" fill="url(#dots)"/>
+  <!-- encimera -->
+  <rect y="340" width="1600" height="80" fill="#4a1d0c" opacity=".55"/>
+  <!-- cacerola -->
+  <g transform="translate(1030 150)">
+    <ellipse cx="130" cy="190" rx="150" ry="18" fill="#000" opacity=".25"/>
+    <rect x="0" y="60" width="260" height="130" rx="22" fill="#2f2a27"/>
+    <rect x="-18" y="50" width="296" height="22" rx="11" fill="#47403b"/>
+    <rect x="-70" y="96" width="62" height="16" rx="8" fill="#47403b"/>
+    <rect x="262" y="96" width="62" height="16" rx="8" fill="#47403b"/>
+    <path d="M30 60 Q130 -10 230 60Z" fill="#6b625c"/>
+    <circle cx="130" cy="14" r="12" fill="#3a332f"/>
+    <g fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".55">
+      <path d="M70 30 q-18 -28 0 -56 q18 -28 0 -56"/><path d="M130 0 q-18 -28 0 -56 q18 -28 0 -56"/><path d="M190 30 q-18 -28 0 -56 q18 -28 0 -56"/>
+    </g>
+  </g>
+  <!-- tazón con ensalada -->
+  <g transform="translate(720 220)">
+    <ellipse cx="90" cy="125" rx="110" ry="12" fill="#000" opacity=".25"/>
+    <path d="M0 30 H180 Q172 120 90 124 Q8 120 0 30Z" fill="#f4e7d3"/>
+    <path d="M0 30 H180" stroke="#e2cfb2" stroke-width="6"/>
+    <circle cx="45" cy="22" r="20" fill="#5f8f3e"/><circle cx="85" cy="12" r="24" fill="#74a64b"/><circle cx="130" cy="22" r="20" fill="#5f8f3e"/>
+    <circle cx="70" cy="26" r="9" fill="#d9432b"/><circle cx="108" cy="24" r="8" fill="#e8b830"/>
+  </g>
+  <!-- tarta / flan -->
+  <g transform="translate(540 250)">
+    <ellipse cx="80" cy="95" rx="100" ry="10" fill="#000" opacity=".25"/>
+    <ellipse cx="80" cy="80" rx="90" ry="14" fill="#fff5e6"/>
+    <path d="M15 80 Q20 20 80 14 Q140 20 145 80Z" fill="#f2b84b"/>
+    <path d="M15 80 Q20 20 80 14 Q140 20 145 80" fill="none" stroke="#a8561b" stroke-width="10" stroke-linecap="round" opacity=".7"/>
+    <circle cx="80" cy="8" r="9" fill="#c1272d"/>
+  </g>
+  <!-- hierbas -->
+  <g fill="#6aa04a" opacity=".9">
+    <path d="M120 360 q-30 -70 10 -140 q30 70 -10 140Z"/><path d="M160 360 q-10 -90 50 -120 q4 80 -50 120Z" fill="#4f7f37"/>
+    <path d="M90 360 q-60 -50 -50 -120 q60 40 50 120Z" fill="#82b95d"/>
+  </g>
+  <g fill="#6aa04a" opacity=".6"><path d="M1480 360 q20 -80 -20 -150 q-30 80 20 150Z"/><path d="M1530 360 q50 -60 40 -130 q-60 50 -40 130Z" fill="#4f7f37"/></g>
+</svg>

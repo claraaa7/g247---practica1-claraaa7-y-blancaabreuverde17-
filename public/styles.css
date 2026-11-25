@@ -100,7 +100,7 @@ form label {
   font-weight: 600;
 }
 
-/* Antes: "form input" (también afectaba al checkbox). Ahora solo los campos de texto, número y búsqueda, los select y los textarea. */
+/* Antes: "form input" (también afectaba al checkbox). Ahora solo los campos de texto, número y búsqueda, y los select. */
 form input[type="text"],
 form input[type="number"],
 form input[type="search"],
@@ -406,4 +406,431 @@ th {
     font-weight: 600;
     color: #666;
   }
+}
+
+/* =====================================================================
+   Mejoras: interacciones (hover y clic) y pie de página
+   ===================================================================== */
+
+/* Desplazamiento suave al pulsar el menú (#formulario, #listado) */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Quien tenga activada la opción "reducir movimiento" no ve animaciones */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition: none !important;
+  }
+}
+
+/* Menú: el enlace reacciona al pasar el ratón y al pulsar */
+nav a {
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  color: inherit;
+  transition: background-color 0.15s;
+}
+
+nav a:hover {
+  background-color: #fbe3f6;
+}
+
+nav a:active {
+  background-color: #f7c6ee;
+}
+
+/* Botones: sombra al pasar el ratón y efecto de "pulsado" al hacer clic */
+form button,
+.row-actions button {
+  transition: background-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+form button:hover,
+.row-actions button:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+form button:active,
+.row-actions button:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: none;
+}
+
+.row-actions button.btn-danger:hover {
+  background: #fdecee;
+}
+
+/* Campos: el borde reacciona al pasar el ratón y la transición es suave al enfocar */
+form input,
+form select,
+form textarea {
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+form input:hover:not(:focus):not([aria-invalid="true"]),
+form select:hover:not(:focus):not([aria-invalid="true"]),
+form textarea:hover:not(:focus):not([aria-invalid="true"]) {
+  border-color: #999;
+}
+
+/* Tabla: la fila se resalta al pasar el ratón */
+tbody tr {
+  transition: background-color 0.15s;
+}
+
+tbody tr:hover {
+  background-color: #fff5fd;
+}
+
+/* Desplegable de ingredientes */
+.recipe-ingredients summary {
+  transition: color 0.15s;
+}
+
+.recipe-ingredients summary:hover {
+  color: #a3248a;
+}
+
+.recipe-ingredients[open] summary {
+  color: #a3248a;
+}
+
+/* Pie de página */
+footer {
+  margin-top: 1rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  text-align: center;
+  background-color: #fafafa;
+  border-top: 1px solid #ddd;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+footer p {
+  margin: 0.25rem 0;
+}
+
+footer a {
+  color: #a3248a;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+
+footer a:hover {
+  color: #7a1a68;
+  text-decoration-thickness: 2px;
+}
+
+/* =====================================================================
+   Mejoras tras la corrección de P1: jerarquía visual y estados bloqueados
+   ===================================================================== */
+
+body {
+  background-color: #faf5f9;
+}
+
+/* Cada bloque (formulario, listado) es una tarjeta con su propio título */
+main section {
+  padding: 1.25rem 1.5rem;
+  background-color: #fff;
+  border: 1px solid #e6d9e3;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+main section > h2 {
+  margin: 0 0 1rem;
+  padding-left: 0.75rem;
+  border-left: 4px solid #a3248a;
+  font-size: 1.35rem;
+}
+
+/* Dentro de la tarjeta, el formulario no repite borde ni fondo */
+main section #recipe-form {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+/* Los filtros forman una banda suave dentro de la tarjeta del listado */
+main section #filters {
+  padding: 1rem;
+  background-color: #faf5f9;
+  border: 1px solid #eadfe7;
+  border-radius: 8px;
+}
+
+aside {
+  align-self: start;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #fff;
+  border: 1px solid #e6d9e3;
+  border-radius: 12px;
+}
+
+aside h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+/* Botón principal con contraste suficiente (texto blanco sobre fondo oscuro) */
+form button.btn-primary {
+  background-color: #a3248a;
+}
+
+form button.btn-primary:hover {
+  background-color: #861d71;
+}
+
+/* Tabla: cabecera diferenciada y filas más claras */
+thead th {
+  background-color: #faf5f9;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 0.75rem;
+}
+
+/* Acciones bloqueadas mientras se envía una petición */
+form button:disabled,
+.row-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+@media (max-width: 700px) {
+  main section {
+    padding: 1rem;
+  }
+}
+
+/* =====================================================================
+   Rediseño visual: tipografía, paleta cálida, imágenes y detalles
+   ===================================================================== */
+
+:root {
+  --crema: #fbf3e6;
+  --papel: #fffaf2;
+  --tinta: #3b2418;
+  --terracota: #b5441f;
+  --terracota-osc: #8f3416;
+  --mostaza: #e2a72e;
+  --oliva: #3f6b2f;
+  --salvia: #7d9b76;
+  --frambuesa: #a3365a;
+  --linea: #ead9c1;
+}
+
+body {
+  font-family: 'Quicksand', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--tinta);
+  background-color: var(--crema);
+}
+
+h1, h2, h3 {
+  font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+  line-height: 1.2;
+}
+
+a { color: var(--terracota-osc); }
+
+/* Cabecera con imagen y cenefa de mantel de cuadros */
+header {
+  position: relative;
+  min-height: 260px;
+  justify-content: flex-start;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  color: #fff;
+  background:
+    linear-gradient(90deg, rgba(43, 20, 8, 0.78) 0%, rgba(43, 20, 8, 0.3) 60%, rgba(43, 20, 8, 0) 100%),
+    url('img/hero.svg') center / cover no-repeat;
+}
+
+header::after,
+footer::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 16px;
+  background: url('img/gingham.svg') repeat-x;
+  background-size: 32px 32px;
+}
+
+header::after { bottom: 0; }
+
+header h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.tagline {
+  margin: 0.2rem 0 0;
+  font-family: 'Caveat', 'Segoe Script', cursive;
+  font-size: 1.9rem;
+  color: #ffe2a8;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+}
+
+/* Navegación */
+nav {
+  background-color: var(--papel);
+  border-bottom: 1px solid var(--linea);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+nav a {
+  font-weight: 700;
+  color: var(--tinta);
+  padding: 0.25rem 0.1rem;
+  border-bottom: 3px solid transparent;
+}
+
+nav a:hover { color: var(--terracota); border-bottom-color: var(--mostaza); }
+
+/* Tarjetas: cada apartado con su color y su imagen */
+main section, aside {
+  background-color: var(--papel);
+  border: 1px solid var(--linea);
+  border-top-width: 6px;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(91, 52, 25, 0.08);
+}
+
+#formulario { border-top-color: var(--terracota); }
+#listado { border-top-color: var(--oliva); }
+aside { border-top-color: var(--mostaza); }
+
+main section > h2,
+aside h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-left: 0;
+  border-left: none;
+}
+
+main section > h2::before,
+aside h2::before {
+  content: '';
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: center / cover no-repeat;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+#form-title::before { background-image: url('img/sec-form.svg'); }
+#list-title::before { background-image: url('img/sec-list.svg'); }
+aside h2::before { background-image: url('img/sec-aside.svg'); }
+
+/* Botones y campos */
+form button.btn-primary { background-color: var(--terracota); }
+form button.btn-primary:hover { background-color: var(--terracota-osc); }
+
+form input:focus, form select:focus, form textarea:focus {
+  border-color: var(--terracota);
+  box-shadow: 0 0 0 3px rgba(181, 68, 31, 0.2);
+}
+
+main section #filters {
+  background-color: #fbeccb;
+  border-color: #f0d9a4;
+}
+
+thead th {
+  background-color: #f3e6d0;
+  color: var(--tinta);
+}
+
+tbody tr:nth-child(even) { background-color: #fdf6ea; }
+
+/* Etiquetas de estado y de categoría */
+.badge-published {
+  background-color: #dfeed2;
+  color: var(--oliva);
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.15rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.chip-tapas { background-color: #fbe6a8; color: #7a5200; }
+.chip-cuchara { background-color: #f6d0bd; color: #8f3416; }
+.chip-frios { background-color: #d8e8d0; color: #2f5a24; }
+.chip-postres { background-color: #f6d3df; color: #8c2a50; }
+
+/* Imagen de cada receta en el listado */
+.recipe-title {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 700;
+}
+
+.recipe-title img {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  box-shadow: 0 1px 4px rgba(91, 52, 25, 0.3);
+}
+
+/* Pie de página con cenefa */
+footer {
+  position: relative;
+  margin-top: 1rem;
+  padding-top: 2.2rem;
+  background-color: var(--tinta);
+  color: #f3e9da;
+}
+
+footer::before { top: 0; }
+
+footer a { color: #ffd9b8; }
+
+/* Más ancho para el listado y una columna de detalle legible */
+@media (min-width: 701px) {
+  body.has-sidebar { grid-template-columns: 3fr 1fr; }
+  table { font-size: 0.97rem; }
+  td[data-label="Detalle"] { min-width: 13rem; width: 32%; }
+  .recipe-title { font-size: 1rem; }
+  .recipe-title img { width: 56px; height: 56px; }
+}
+
+/* En pantallas medianas el aviso pasa debajo para que el listado tenga todo el ancho */
+@media (min-width: 701px) and (max-width: 1100px) {
+  body.has-sidebar {
+    grid-template-columns: 1fr;
+    grid-template-areas: "header" "nav" "main" "aside" "footer";
+  }
+}
+
+@media (max-width: 700px) {
+  .tagline { font-size: 1.5rem; }
+  main section > h2::before,
+  aside h2::before { width: 42px; height: 42px; }
 }

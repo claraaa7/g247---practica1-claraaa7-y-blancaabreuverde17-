@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Libro de recetas con lápiz">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbe3c8"/><stop offset="1" stop-color="#e8a867"/></linearGradient></defs>
+  <rect width="96" height="96" rx="18" fill="url(#g)"/>
+  <path d="M10 28 Q30 22 48 30 Q66 22 86 28 V76 Q66 70 48 78 Q30 70 10 76Z" fill="#fff8ec" stroke="#b5441f" stroke-width="3"/>
+  <path d="M48 30 V78" stroke="#b5441f" stroke-width="3"/>
+  <g stroke="#d9b48a" stroke-width="3" stroke-linecap="round"><path d="M18 40 H40"/><path d="M18 50 H40"/><path d="M18 60 H34"/><path d="M56 40 H78"/><path d="M56 50 H74"/></g>
+  <g transform="rotate(35 70 62)"><rect x="64" y="40" width="8" height="34" rx="2" fill="#e2a72e"/><path d="M64 74 L68 84 L72 74Z" fill="#f4d9b0"/><rect x="64" y="40" width="8" height="6" fill="#c1272d"/></g>
+</svg>
